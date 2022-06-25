@@ -14,10 +14,10 @@ adminpanel
     <div>
         <div class="modal-footer" style="justify-content: space-evenly;">
             <button class="btn btn-primary">
-                <a style="color:white; text-decoration: none" href="{{route('company_panel')}}">Company</a>
+                <a style="color:white; text-decoration: none" href="{{route('company.index')}}">Company</a>
             </button>
             <button class="btn btn-primary">
-                <a style="color:white; text-decoration: none" href="{{route('employee')}}">Employee</a>
+                <a style="color:white; text-decoration: none" href="{{route('employee.index')}}">Employee</a>
             </button>
         </div>
     </div>

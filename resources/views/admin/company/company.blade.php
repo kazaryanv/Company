@@ -22,7 +22,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{route('store-company')}}" method="post" enctype="multipart/form-data">
+                    <form action="{{route('company_panel.store')}}" method="post" enctype="multipart/form-data">
                         {{ csrf_field() }}
                         <div class="form-group">
                             <label style="display: flex; justify-content: center" for="image" class="form-label">Logo Company</label>

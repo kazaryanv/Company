@@ -9,17 +9,15 @@ use Illuminate\Support\Facades\DB;
 
 class EmployeeController extends Controller
 {
-    public function logo() {
-        $data = DB::table("employees")
-            ->join("companies", "employees.company_id", "=", "companies.id")
-            ->select("employees.name", "employees.id","employees.surname", "employees.email","companies.logo")->get();
-        return view('admin.employee.employee', compact('data'));
-    }
+//    public function logo() {
+//        $data = DB::table("employees")
+//            ->join("companies", "employees.company_id", "=", "companies.id")
+//            ->select("employees.name", "employees.id","employees.surname", "employees.email","companies.logo")->get();
+//        return view('admin.employee.employee', compact('data'));
+//    }
     public function index() {
-//        $employe = DB::table('employees')->simplePaginate(10);
-//        return view("admin.employee.employee",['data' => $employe]);
-        $employe = DB::table('employees')->simplePaginate(2);
-        return view('admin.employee.employee', ['data' => $employe ]);
+        $employe = Employee::with('company')->paginate(10);
+        return view('admin.employee.employee', ['employee' => $employe ]);
     }
 
     public function create()
@@ -89,3 +87,4 @@ class EmployeeController extends Controller
 
 
 }
+
