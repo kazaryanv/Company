@@ -22,6 +22,6 @@ Route::prefix('admin')->group(function () {
     Route::get('admin/company/panel/edit/{id}', [CompanyController::class, 'edit'])->name('edit-company');
     Route::post('admin/company/panel/edit/store', [CompanyController::class, 'update'])->name('update-company');
     Route::get('/admin/company/panel/delete/{id}',[CompanyController::class,'destroy'])->name('delete-company');
-
-    Route::resource("/employee-panel", EmployeeController::class);
 });
+
+Route::resource("/employee", EmployeeController::class);

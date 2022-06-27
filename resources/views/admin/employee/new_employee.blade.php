@@ -1,6 +1,10 @@
 @extends('layouts.all')
 @section('title')
-    employeePanel
+    @if(isset($employee))
+        employeePanel_Update
+    @else
+        New Employee
+    @endif
 @endsection
 @section('content')
     @if ($errors->any())
@@ -18,21 +22,21 @@
         @else
             <h2>Create new employee</h2>
         @endif
-        <form action="{{ (isset($employee)) ? route('employee-panel.update', $employee)  : route('employee-panel.store') }}" method="post">
+        <form action="{{ (isset($employee)) ? route('employee.update', $employee)  : route('employee.store') }}" method="post">
             @csrf
             @if(isset($employee))
                 @method('put')
             @endif
             <div class="mb-3">
-                <select class="form-control"  name="company_id">--}}
-                    <option value="company_id">Please select a company</option>
+                <select class="form-control" id="company_id"  name="company_id">
+                    <option value="{{(isset($employee)) ? $employee->company_id : '' }}" name="company_id" id="company_id">Please select a company</option>
                     @foreach(\App\Models\Company::all() as $company)
-                        <option  id="company_id" name="company_id"  value="{{$company->company_id}}">{{$company->company_name}}</option>
+                            <option  id="company_id" name="company_id"  value="{{(isset($employee)) ? $employee->company_id : '' }}">{{$company->company_name}}</option>
                     @endforeach
                 </select>
             </div>
             <div class="mb-3">
-                <label for="name" class="form-label">Book name</label>
+                <label for="name" class="form-label">name</label>
                 <input value="{{(isset($employee)) ? $employee->name : '' }}" type="text" name="name" class="form-control" id="name" placeholder="name">
             </div>
 
@@ -50,12 +54,12 @@
             </div>
             @if(isset($employee))
                 <button class="btn btn-primary"> Update</button>
-                <a href="{{ route('employee-panel.show', $employee->id) }}">Back</a>
+                <a href="{{ route('employee.show', $employee->id) }}">Back</a>
             @else
                 <button class="btn btn-primary">
                     Save
                 </button>
-                <a href="{{ route('employee-panel.index') }}">Back</a>
+                <a href="{{ route('employee.index') }}">Back</a>
 
             @endif
 

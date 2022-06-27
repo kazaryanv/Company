@@ -18,7 +18,7 @@
         </div>
     @endif
 
-    <a class="btn btn-primary ms-2 mb-2 mt-2" href="{{route('employee-panel.create')}}">Create New Employee</a>
+    <a class="btn btn-primary ms-2 mb-2 mt-2" href="{{route('employee.create')}}">Create New Employee</a>
     <a class="btn btn-primary ms-2 mb-2 mt-2" href="{{route('dashboard')}}">Back</a>
     <table class="table">
         <thead class="thead-dark">
@@ -36,14 +36,14 @@
                     <th scope="row">{{ $row -> id}}</th>
                     <td>{{ $row -> name }}</td>
                     <td>{{ $row -> surname }}</td>
-                    <td><img style="width: 50px;height: 50px; border-radius: 50%" src="{{asset('storage/' . $row->logo)}}"></td>
+                    <td><img style="width: 50px;height: 50px; border-radius: 50%" src="{{asset('storage/' . $row->company->logo)}}"></td>
                     <td>
-                     <div><a class="btn btn-outline-success btn-sm mb-1" href="{{route('employee-panel.show' , $row->id)}}">ALL Posts</a></div>
+                    <div><a class="btn btn-outline-success btn-sm mb-1" href="{{route('employee.show' , $row->id)}}">ALL Posts</a></div>
                     </td>
                     </tr>
                 @endforeach
                 <table><tr><td><span>{{$employee->links()}}</span></td></tr></table>
             @endif
-        </tbody>
+        </tbody>s
     </table>
 @endsection

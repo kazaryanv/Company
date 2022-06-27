@@ -17,7 +17,7 @@ adminpanel
                 <a style="color:white; text-decoration: none" href="{{route('company_panel')}}">Company</a>
             </button>
             <button class="btn btn-primary">
-                <a style="color:white; text-decoration: none" href="{{route('employee-panel.index')}}">Employee</a>
+                <a style="color:white; text-decoration: none" href="{{route('employee.index')}}">Employee</a>
             </button>
         </div>
     </div>

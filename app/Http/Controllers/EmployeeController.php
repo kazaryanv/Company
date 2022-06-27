@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Employee;
-use App\Models\r;
 use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
@@ -54,9 +53,9 @@ class EmployeeController extends Controller
             'updated_at' => NOW()
         ]);
         if ($store) {
-            return redirect()->route('employee-panel.index')->with('success', 'Row successfully created');
+            return redirect()->route('employee.index')->with('success', 'Row successfully created');
         } else {
-            return redirect()->route('employee-panel.index')->with('fail', 'Fail!');
+            return redirect()->route('employee.index')->with('fail', 'Fail!');
         }
     }
 
@@ -77,10 +76,10 @@ class EmployeeController extends Controller
      * @param  \App\Models\Employee  $employee
      * @return \Illuminate\Http\Response
      */
-//    public function edit(Employee $employee)
-//    {
-//        return view('admin.employee.new_employees', ['employee' => $employee]);
-//    }
+    public function edit(Employee $employee)
+    {
+        return view('admin.employee.new_employee', ['employee' => $employee]);
+    }
 
     /**
      * Update the specified resource in storage.
@@ -93,7 +92,7 @@ class EmployeeController extends Controller
     {
         $update = $employee ->update($request->all());
         if($update)
-            return redirect()->route('employee-panel.index')->with('success', 'update successfully created!');
+            return redirect()->route('employee.index')->with('success', 'update successfully created!');
         return back()->with('fail', 'Fail!');
     }
 
@@ -107,7 +106,7 @@ class EmployeeController extends Controller
     {
         $delete = $employee->delete();
         if($delete) {
-            return redirect()->route('employee-panel.index')->with('success', 'deleted successfully created!');
+            return redirect()->route('employee.index')->with('success', 'deleted successfully created!');
         } else {
             return back()->with('fail', 'Fail!');
         }
