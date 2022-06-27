@@ -8,39 +8,27 @@ use Illuminate\Http\Request;
 
 class CompanyController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        return view("admin.company.company", ['company' => Company::get()]);
+        $company = new Company();
+        return view("admin.company.company_panel", ['data' => $company->get()]);
 
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         return view("admin.company.company_panel");
-
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(CompanyRequest $request)
+
+    public function store(Request $request)
     {
+        $request->validate([
+            'company_name' => 'required',
+            'logo' => 'dimensions:min_width:100,min_height:100',
+        ]);
         $path = $request->file('image')->store('logo', 'public');
-        $author = new Company();
-        $store = $author->create([
+        $store = Company::create([
             'company_name' => $request->company_name,
             'email' => $request->email,
             'logo' => $path,
@@ -55,48 +43,60 @@ class CompanyController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function show($id)
     {
-        //
+        $company = new Company();
+        return view('admin.company.one_company', ['company' => $company -> find($id)]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
-        //
+        $company = new Company();
+        return view('admin.company.edit', ['company' => $company -> find($id)]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(Request $request, $id)
     {
-        //
+        dd($request->logo);
+        $users  = Company::find($id);
+
+        $users->company_name                 = $request->input('company_name');
+        $users->email                        = $request->input('email');
+        $users->logo                         = $request->input('logo');
+        $users->website                      = $request->input('website');
+
+
+        if($request->hasfile('image'))
+        {
+            $file = $request->file('image');
+            $extension = $request->logo->getClientOriginalExtension();
+            $fileName = uniqid().'.'.$extension;
+            $file->move(public_path().'/storage/',$fileName);
+            $data = $fileName;
+            $users->logo = $data;
+        }
+        $users->save();
+        if($users) {
+            return redirect()->route('company_panel')->with('success', 'Row successfully created');
+        } else {
+            return redirect()->route('company_panel')->with('fail', 'Fail!');
+        }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy($id)
     {
-        //
+        $delete =  Company::find($id);
+        $file_name = $delete->logo;
+        $file_path = public_path('storage/'.$file_name);
+        unlink($file_path);
+        $delete->delete();
+        if($file_path) {
+            return redirect()->route('company_panel')->with('success','Deleted successfully');
+        } else {
+            return redirect()->route('company_panel')->with('success','Deleted file');
+        }
     }
 }

@@ -19,7 +19,7 @@ class AuthSeeder extends Seeder
              DB::table("users")->insert([
                     'name' => "jon",
                     'email' => 'company@mail.ru',
-                    'password' => Hash::make('company'),
+                    'password' => '$2y$10$zLKDlFBH5JzRhQQV1DPzDOak.6HDXhQr9.c9hOzE1SIe7HwmsiPw6',
                     'created_at' => NOW(),
                     'updated_at' => NOW()
                 ]);

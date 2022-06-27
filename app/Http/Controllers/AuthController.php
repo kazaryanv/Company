@@ -24,7 +24,7 @@ class AuthController extends Controller
         }
     }
     public function create_user(array $data) {
-        return User::create([
+       return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password'])

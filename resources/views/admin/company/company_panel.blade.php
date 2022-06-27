@@ -8,8 +8,17 @@
             {{ session('success') }}
         </div>
     @endif
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
     <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    <button style="margin: 10px 20px" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
         Create New Company
     </button>
 
@@ -22,7 +31,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{route('company_panel.store')}}" method="post" enctype="multipart/form-data">
+                    <form action="{{route('store-company')}}" method="post" enctype="multipart/form-data">
                         {{ csrf_field() }}
                         <div class="form-group">
                             <label style="display: flex; justify-content: center" for="image" class="form-label">Logo Company</label>
@@ -49,19 +58,34 @@
             </div>
         </div>
     </div>
-    @if(isset($data))
-        @foreach($data as $row)
-            <div class="d-flex">
-                <div>
-                    <h2>{{ $row -> company_name }}</h2>
-                    <p>{{ $row -> email}}</p>
-                </div>
-                <div style="width: 15%;height: 70px;display: flex;align-items: center;justify-content: center;">
-                    <img style="width: 50px;height: 50px;" src="{{asset('storage/' . $row -> logo)}}">
-                </div>
-            </div>
-{{--            <a href="{{ route('one-image', $row) }}">More</a>--}}
-            <div style="border-bottom-style: ridge;"></div>
-        @endforeach
-    @endif
+    <a class="btn btn-primary" href="{{route('dashboard')}}">Back</a>
+    <table class="table">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">name</th>
+            <th scope="col">website</th>
+            <th scope="col">email</th>
+            <th scope="col">Company-Logo</th>
+        </tr>
+        </thead>
+        <tbody>
+                    @if(isset($data))
+                        @foreach($data as $row)
+                            <tr>
+                            <th scope="row">{{ $row -> id}}</th>
+                            <td>{{ $row -> company_name }}</td>
+                            <td>{{ $row -> website }}</td>
+                            <td>{{ $row -> email }}</td>
+                            <td> <img class="col" style="width: 50px;height: 50px; border-radius: 50%" src="{{asset('storage/' . $row -> logo)}}"></td>
+                            <td> <div>
+                                    <div><a class="btn btn-outline-success btn-sm mb-1" href="{{route('show-company' , $row->id)}}">Edit</a></div>
+                                    <div><a class="btn btn-outline-danger btn-sm" href="{{route('delete-company', $row->id)}}">Delete</a></div>
+                                </div></td>
+                            </tr>
+                        @endforeach
+                    @endif
+
+        </tbody>
+    </table>
 @endsection
