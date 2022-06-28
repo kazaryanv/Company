@@ -44,6 +44,6 @@
                 @endforeach
                 <table><tr><td><span>{{$employee->links()}}</span></td></tr></table>
             @endif
-        </tbody>s
+        </tbody>
     </table>
 @endsection

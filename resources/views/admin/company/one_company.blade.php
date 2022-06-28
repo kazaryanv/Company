@@ -12,9 +12,7 @@
                 <p>Email Company`  {{ $company -> email }}</p>
                 <p>Website Company`  {{ $company -> website }}</p>
                 <p>Published`{{ $company -> created_at }}</p>
-                <button class="btn btn-primary">
-                    <a style="color:white; text-decoration: none" href="{{ route('edit-company', $company->id) }}">Edit</a>
-                </button>
+                    <a class="btn btn-outline-primary" href="{{ route('edit-company', $company->id) }}">Edit</a>
             </div>
         </div>
     </div>

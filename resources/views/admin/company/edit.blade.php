@@ -23,7 +23,8 @@
                 <label for="website" class="form-label">website</label>
                 <input value="{{ $company->website  }}" name="website" type="text" class="form-control" id="website" placeholder="website">
             </div>
-            <button class="btn btn-success">Update</button>
+            <button class="btn btn-outline-success">Update</button>
+            <a class="btn btn-outline-dark" href="{{route('show-company' , $company->id)}}">Back</a>
         </form>
     </div>
 @endsection
