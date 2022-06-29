@@ -21,7 +21,7 @@ class CompanyController extends Controller
     }
 
 
-    public function store(Request $request)
+    public function uploads(Request $request)
     {
         $request->validate([
             'company_name' => 'required',
