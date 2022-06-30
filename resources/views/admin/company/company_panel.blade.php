@@ -3,20 +3,9 @@
     companyPanel
 @endsection
 @section('content')
-    @if(session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
-        </div>
-    @endif
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
+    <header style="margin: 0px 20px;outline: outset;display: flex;padding-left: 10px;">
+        <h2>Company</h2>
+    </header>
     <!-- Button trigger modal -->
     <button style="margin: 10px 20px" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
         Create New Company
@@ -59,6 +48,20 @@
         </div>
     </div>
     <a class="btn btn-primary" href="{{route('dashboard')}}">Back</a>
+    @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
     <table class="table">
         <thead class="thead-dark">
         <tr>
