@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\EmployeeRequest;
 use App\Models\Employee;
 use Illuminate\Http\Request;
 
@@ -34,15 +35,8 @@ class EmployeeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(EmployeeRequest $request)
     {
-        $request->validate([
-            'company_id' => 'required|nullable',
-            'name' => 'required',
-            'surname' => 'required',
-            'email' => 'nullable',
-            'phone_number' => 'required',
-        ]);
         $store = Employee::create([
             'company_id' => $request->company_id,
             'name' => $request->name,
@@ -88,7 +82,7 @@ class EmployeeController extends Controller
      * @param  \App\Models\Employee  $employee
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Employee $employee)
+    public function update(EmployeeRequest $request, Employee $employee)
     {
         $update = $employee ->update($request->all());
         if($update)

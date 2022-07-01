@@ -20,7 +20,7 @@ class AuthController extends Controller
         if(Auth::attempt($user_data)) {
             return redirect()->route('dashboard');
         } else {
-            return back();
+            return redirect()->route(back())->with('errors','ERRORS');
         }
     }
     public function create_user(array $data) {

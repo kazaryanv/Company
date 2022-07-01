@@ -10,24 +10,20 @@ class CompanyController extends Controller
 {
     public function index()
     {
-        $company = new Company();
-        return view("admin.company.company_panel", ['data' => $company->get()]);
+        $company = Company::all();
+        return view("admin.company.company_panel",compact('company'));
 
     }
 
     public function create()
     {
-        return view("admin.company.company_panel");
+        return view("admin.company.edit");
     }
 
 
-    public function uploads(Request $request)
+    public function store(Request $request)
     {
-        $request->validate([
-            'company_name' => 'required',
-            'logo' => 'dimensions:min_width:100,min_height:100',
-        ]);
-        $path = $request->file('image')->store('logo', 'public');
+        $path = $request->file('logo')->store('logo', 'public');
         $store = Company::create([
             'company_name' => $request->company_name,
             'email' => $request->email,
@@ -35,57 +31,49 @@ class CompanyController extends Controller
             'website' => $request->website,
             'created_at' => NOW(),
             'updated_at' => NOW()
-        ]);
-        if ($store) {
-            return redirect()->route('company_panel')->with('success', 'Row successfully created');
-        } else {
-            return redirect()->route('company_panel')->with('fail', 'Fail!');
+            ]);
+        if ($store){
+            return redirect()->route('companies.index')->with('success', 'Company created successfully');
+        }else{
+            return redirect()->route(back())->with('fail', "file");
         }
     }
 
 
-    public function show($id)
+    public function show(Company $company)
     {
-        $company = new Company();
-        return view('admin.company.one_company', ['company' => $company -> find($id)]);
+        return view('admin.company.one_company',['company'=> $company]);
+
     }
 
-    public function edit($id)
+    public function edit(Company $company)
     {
-        $company = new Company();
-        return view('admin.company.edit', ['company' => $company -> find($id)]);
-    }
+        return view('admin.company.edit',['company'=> $company]);
 
-
-    public function update(Request $request, $id)
-    {
-        dd($request->logo);
-        $users  = Company::find($id);
-
-        $users->company_name                 = $request->input('company_name');
-        $users->email                        = $request->input('email');
-        $users->logo                         = $request->input('logo');
-        $users->website                      = $request->input('website');
-
-
-        if($request->hasfile('image'))
-        {
-            $file = $request->file('image');
-            $extension = $request->logo->getClientOriginalExtension();
-            $fileName = uniqid().'.'.$extension;
-            $file->move(public_path().'/storage/',$fileName);
-            $data = $fileName;
-            $users->logo = $data;
-        }
-        $users->save();
-        if($users) {
-            return redirect()->route('company_panel')->with('success', 'Row successfully created');
-        } else {
-            return redirect()->route('company_panel')->with('fail', 'Fail!');
-        }
     }
 
 
+    public function update(CompanyRequest $request, $id)
+    {
+            $users = Company::query()->find($id);
+            $users->company_name = $request->input('company_name');
+            $users->email = $request->input('email');
+            $users->website = $request->input('website');
+
+            if ($request->hasfile('logo')) {
+                $file = $request->file('logo');
+                $extension = $request->logo->getClientOriginalExtension();
+                $fileName = uniqid() . '.' . $extension;
+                $file->move(storage_path() . 'app/public/', $fileName);
+                $data = $fileName;
+                $users->logo = $data;
+            }
+            if ($users->save()) {
+                return redirect()->route('companies.index')->with('success', 'Row successfully created');
+            }else{
+                return redirect()->route(back())->with('fail', 'fail');
+            }
+    }
     public function destroy($id)
     {
         $delete =  Company::find($id);
@@ -93,10 +81,10 @@ class CompanyController extends Controller
         $file_path = public_path('storage/'.$file_name);
         unlink($file_path);
         $delete->delete();
-        if($file_path) {
-            return redirect()->route('company_panel')->with('success','Deleted successfully');
+        if($delete->delete()) {
+            return redirect()->route('companies.index')->with('success','Deleted successfully');
         } else {
-            return redirect()->route('company_panel')->with('success','Deleted file');
+            return redirect()->route('companies.index')->with('success','Deleted file');
         }
     }
 }

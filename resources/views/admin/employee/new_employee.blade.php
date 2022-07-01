@@ -29,9 +29,9 @@
             @endif
             <div class="mb-3">
                 <select class="form-control" id="company_id"  name="company_id">
-                    <option value="{{(isset($employee)) ? $employee->company_id : '' }}" name="company_id" id="company_id">Please select a company</option>
+                    <option>Please select a company</option>
                     @foreach(\App\Models\Company::all() as $company)
-                            <option  id="company_id" name="company_id"  value="{{(isset($employee)) ? $employee->company_id : '' }}">{{$company->company_name}}</option>
+                            <option value="{{$company->id}}">{{$company->company_name}}</option>
                     @endforeach
                 </select>
             </div>

@@ -15,7 +15,8 @@
                 <form class="d-inline" action="{{ route('employee.edit', $employee) }}" method="get">
                     @csrf
                     <button class="btn btn-outline-success">Edit</button>
-                </form>                <form class="d-inline" action="{{ route('employee.destroy', $employee) }}" method="post">
+                </form>
+                <form class="d-inline" action="{{ route('employee.destroy', $employee) }}" method="post">
                     @csrf
                     @method('delete')
                     <button class="btn btn-outline-danger">Delete</button>

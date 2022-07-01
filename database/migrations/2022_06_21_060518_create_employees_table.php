@@ -15,15 +15,15 @@ return new class extends Migration
     {
         Schema::create('employees', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('company_id');
+            $table->unsignedBigInteger('company_id')->nullable();
             $table->foreign('company_id')
                 ->references('id')
                 ->on('companies')
                 ->onDelete('cascade');
             $table->string('name');
             $table->string('surname');
-            $table->string('email');
-            $table->string('phone_number');
+            $table->string('email')->nullable();
+            $table->string('phone_number')->nullable();
             $table->timestamps();
         });
     }
