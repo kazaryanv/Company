@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CompanyRequest;
 use App\Models\Company;
 use Illuminate\Http\Request;
+use function Symfony\Component\HttpFoundation\filter;
 
 class CompanyController extends Controller
 {
@@ -21,7 +22,7 @@ class CompanyController extends Controller
     }
 
 
-    public function store(Request $request)
+    public function store(CompanyRequest $request)
     {
         $path = $request->file('logo')->store('logo', 'public');
         $store = Company::create([
@@ -55,16 +56,18 @@ class CompanyController extends Controller
 
     public function update(CompanyRequest $request, $id)
     {
-            $users = Company::query()->find($id);
+            $users = Company::query()->findOrFail($id);
             $users->company_name = $request->input('company_name');
             $users->email = $request->input('email');
+            $users->email = $request->input('logo');
             $users->website = $request->input('website');
 
             if ($request->hasfile('logo')) {
                 $file = $request->file('logo');
                 $extension = $request->logo->getClientOriginalExtension();
                 $fileName = uniqid() . '.' . $extension;
-                $file->move(storage_path() . 'app/public/', $fileName);
+                $filepath = public_path('storage/'.$fileName);
+                $file->move(public_path().'/storage/',$fileName);
                 $data = $fileName;
                 $users->logo = $data;
             }
@@ -76,7 +79,7 @@ class CompanyController extends Controller
     }
     public function destroy($id)
     {
-        $delete =  Company::find($id);
+        $delete =  Company::query()->findOrFail($id);
         $file_name = $delete->logo;
         $file_path = public_path('storage/'.$file_name);
         unlink($file_path);
