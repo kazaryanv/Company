@@ -24,7 +24,7 @@ class EmployeeRequest extends FormRequest
     public function rules()
     {
         return [
-            'company_id' => 'sometimes|nullable',
+            'company_id' => 'required|exists:companies,id',
             'name' => 'required|string|min:3|max:191',
             'surname' => 'required|string|min:3|max:191',
             'email'=>'sometimes|nullable|email',

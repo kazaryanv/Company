@@ -7,7 +7,7 @@
         <div class="card">
             <div class="card-body">
                 <a href="{{route('companies.index')}}">Back</a>
-                <div>Logotype Company`<img  style="width: 50px;height: 50px;border-radius: 50%" src="{{asset('storage/' . $company -> logo)}}"></div>
+                <div>Logotype Company`<img  style="width: 50px;height: 50px;border-radius: 50%" src="@if(isset($company -> logo)){{asset('storage/' . $company -> logo)}} @else {{asset('images/defolt.jpg')}} @endif"></div>
                 <h2>Name Company`{{ $company -> company_name }}</h2>
                 <p>Email Company`  {{ $company -> email }}</p>
                 <p>Website Company`  {{ $company -> website }}</p>

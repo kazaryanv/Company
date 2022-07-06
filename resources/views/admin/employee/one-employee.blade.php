@@ -7,10 +7,10 @@
         <div class="card">
             <div class="card-body">
                 <a href="{{route('employee.index')}}">Back</a>
-                <h2>{{ $employee -> name }}</h2>
-                <p>Author`  {{ $employee -> surname }}</p>
-                <p>Author`  {{ $employee -> email }}</p>
-                <p>Author`  {{ $employee -> phone_number }}</p>
+                <h2>Name`{{ $employee -> name }}</h2>
+                <p>Surname`  {{ $employee -> surname }}</p>
+                <p>Email`  {{ $employee -> email }}</p>
+                <p>Phone`  {{ $employee -> phone_number }}</p>
                 <p>Published`  {{ $employee -> created_at }}</p>
                 <form class="d-inline" action="{{ route('employee.edit', $employee) }}" method="get">
                     @csrf

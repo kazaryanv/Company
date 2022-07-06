@@ -31,7 +31,7 @@
                 <select class="form-control" id="company_id"  name="company_id">
                     <option>Please select a company</option>
                     @foreach(\App\Models\Company::all() as $company)
-                            <option value="{{$company->id}}">{{$company->company_name}}</option>
+                            <option @if((isset($employee)) ? $company->id == old('company_id', $employee->company_id) : '') selected @endif value="{{$company->id}}">{{$company->company_name}}</option>
                     @endforeach
                 </select>
             </div>

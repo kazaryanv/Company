@@ -24,27 +24,37 @@ class CompanyController extends Controller
 
     public function store(CompanyRequest $request)
     {
-        $path = $request->file('logo')->store('logo', 'public');
-        $store = Company::create([
-            'company_name' => $request->company_name,
-            'email' => $request->email,
-            'logo' => $path,
-            'website' => $request->website,
-            'created_at' => NOW(),
-            'updated_at' => NOW()
-            ]);
-        if ($store){
-            return redirect()->route('companies.index')->with('success', 'Company created successfully');
-        }else{
-            return redirect()->route(back())->with('fail', "file");
-        }
+            if ($request->hasFile('logo')){
+                $path =$request->file('logo')->store('logo', 'public');
+                $store = Company::create([
+                    'company_name' => $request->company_name,
+                    'email' => $request->email,
+                    'logo' => $path,
+                    'website' => $request->website,
+                ]);
+                if ($store){
+                    return redirect()->route('companies.index')->with('success', 'Company created successfully');
+                }else{
+                    return redirect()->route(back())->with('fail', 'fail');
+                }
+            }else{
+                $store = Company::create([
+                    'company_name' => $request->company_name,
+                    'email' => $request->email,
+                    'website' => $request->website,
+                ]);
+                if ($store){
+                    return redirect()->route('companies.index')->with('success', 'Company created successfully');
+                }else{
+                    return redirect()->route(back())->with('fail', 'fail');
+                }
+            }
     }
 
 
     public function show(Company $company)
     {
-        return view('admin.company.one_company',['company'=> $company]);
-
+            return view('admin.company.one_company',['company'=> $company]);
     }
 
     public function edit(Company $company)

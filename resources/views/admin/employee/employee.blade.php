@@ -36,7 +36,7 @@
                     <th scope="row">{{ $row -> id}}</th>
                     <td>{{ $row -> name }}</td>
                     <td>{{ $row -> surname }}</td>
-                    <td><img style="width: 50px;height: 50px; border-radius: 50%" src="{{asset('storage/' . $row->company->logo)}}"></td>
+                    <td><img style="width: 50px;height: 50px; border-radius: 50%" src="@if(isset($row->company->logo)){{asset('storage/' . $row->company->logo)}}@else {{asset('images/defolt.jpg')}} @endif"></td>
                     <td>
                     <div><a class="btn btn-outline-success btn-sm mb-1" href="{{route('employee.show' , $row->id)}}">ALL Posts</a></div>
                     </td>

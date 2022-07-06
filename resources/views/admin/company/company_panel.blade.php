@@ -40,7 +40,7 @@
                     <td>{{ $row -> company_name }}</td>
                     <td>{{ $row -> website }}</td>
                     <td>{{ $row -> email }}</td>
-                    <td> <img class="col" style="width: 50px;height: 50px; border-radius: 50%" src="{{asset('storage/' . $row -> logo)}}"></td>
+                    <td> <img class="col" style="width: 50px;height: 50px; border-radius: 50%" src="@if(isset($row -> logo)){{asset('storage/' . $row -> logo)}} @else {{asset('images/defolt.jpg')}} @endif"></td>
                     <td>
                         <div>
                             <a class="btn btn-outline-success btn-sm mb-1" href="{{route('companies.show' , $row->id)}}">Edit</a>
