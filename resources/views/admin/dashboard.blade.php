@@ -21,4 +21,6 @@ adminpanel
             </button>
         </div>
     </div>
+<br>
+<br>
 @endsection
