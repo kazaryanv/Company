@@ -20,7 +20,8 @@ class AuthController extends Controller
         if(Auth::attempt($user_data)) {
             return redirect()->route('dashboard');
         } else {
-            return redirect()->route(back())->with('errors','ERRORS');
+            return redirect()->back()
+                ->withErrors(['validation' => 'We need to know your email address and password!']);
         }
     }
     public function create_user(array $data) {

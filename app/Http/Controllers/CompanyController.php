@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CompanyRequest;
 use App\Models\Company;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use function Symfony\Component\HttpFoundation\filter;
 
 class CompanyController extends Controller
@@ -73,6 +74,9 @@ class CompanyController extends Controller
             $users->website = $request->input('website');
 
             if ($request->hasfile('logo')) {
+                if ($logo = $users->logo){
+                    Storage::disk('public')->delete($logo);
+                }
                 $file = $request->file('logo');
                 $extension = $request->logo->getClientOriginalExtension();
                 $fileName = uniqid() . '.' . $extension;
@@ -90,9 +94,13 @@ class CompanyController extends Controller
     public function destroy($id)
     {
         $delete =  Company::query()->findOrFail($id);
+    try{
         $file_name = $delete->logo;
         $file_path = public_path('storage/'.$file_name);
         unlink($file_path);
+    }catch (\Throwable $e){
+
+    }
         $delete->delete();
         if($delete->delete()) {
             return redirect()->route('companies.index')->with('success','Deleted successfully');
