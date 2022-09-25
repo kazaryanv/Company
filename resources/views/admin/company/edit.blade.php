@@ -8,7 +8,6 @@
 @endsection
 @section('content')
 
-
     @if ($errors->any())
         <div class="alert alert-danger">
             <ul>
@@ -30,7 +29,10 @@
                 @method('put')
             @endif
             <div class="mb-3">
-                <label for="logo" class="form-label">logo</label>
+                <label for="logo" class="form-label">logo Company</label>
+                @if(isset($company))
+                    <img style="width: 50px;height: 50px;border-radius: 50%;margin-bottom: 5px" src="@if(isset($company -> logo)){{asset('storage/' . $company -> logo)}} @else {{asset('images/defolt.jpg')}} @endif" alt="">
+                @endif
                 <input value="{{(isset($company)) ? $company->logo : ''  }}" name="logo" type="file" class="form-control" id="logo" placeholder="logo">
             </div>
 

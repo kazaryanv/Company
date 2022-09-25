@@ -28,6 +28,10 @@
                 @method('put')
             @endif
             <div class="mb-3">
+                @if(isset($employee))
+                    <img style="width: 50px;height: 50px;border-radius: 50%;border: 2px solid black;margin-bottom: 5px" src="@if(isset($employee->company->logo)){{asset('storage/' . $employee->company->logo)}}@else {{asset('images/defolt.jpg')}} @endif"
+                         alt="">
+                @endif
                 <select class="form-control" id="company_id"  name="company_id">
                     <option>Please select a company</option>
                     @foreach(\App\Models\Company::all() as $company)
