@@ -55,8 +55,10 @@ class CompanyController extends Controller
 
     public function show(Company $company)
     {
-            return view('admin.company.one_company',['company'=> $company]);
+        return view('admin.company.one_company',['company'=> $company]);
+
     }
+
 
     public function edit(Company $company)
     {

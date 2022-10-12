@@ -18,4 +18,3 @@ Route::prefix('admin')->group(function () {
     Route::resource("/companies", CompanyController::class);
     Route::resource("/employee", EmployeeController::class);
 });
-
