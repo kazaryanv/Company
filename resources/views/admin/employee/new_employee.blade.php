@@ -35,26 +35,26 @@
                 <select class="form-control" id="company_id"  name="company_id">
                     <option>Please select a company</option>
                     @foreach(\App\Models\Company::all() as $company)
-                            <option @if((isset($employee)) ? $company->id == old('company_id', $employee->company_id) : '') selected @endif value="{{$company->id}}">{{$company->company_name}}</option>
+                            <option @if((isset($employee)) ? $company->id == old('company_id', $employee->company_id) : old('company_id', '')) selected @endif value="{{$company->id}}">{{$company->company_name}}</option>
                     @endforeach
                 </select>
             </div>
             <div class="mb-3">
                 <label for="name" class="form-label">name</label>
-                <input value="{{(isset($employee)) ? $employee->name : '' }}" type="text" name="name" class="form-control" id="name" placeholder="name">
+                <input value="{{(isset($employee)) ? $employee->name  : old('name', '')}}" type="text" name="name" class="form-control" id="name" placeholder="name">
             </div>
 
             <div class="mb-3">
                 <label for="surname" class="form-label">surname</label>
-                <input  value="{{(isset($employee)) ? $employee->surname : '' }}" type="text" name="surname"  class="form-control" id="surname" placeholder="surname">
+                <input  value="{{(isset($employee)) ? $employee->surname : old('surname', '') }}" type="text" name="surname"  class="form-control" id="surname" placeholder="surname">
             </div>
             <div class="mb-3">
                 <label for="email" class="form-label">email</label>
-                <input  value="{{(isset($employee)) ? $employee->email : '' }}" type="text" name="email"  class="form-control" id="email" placeholder="email">
+                <input  value="{{(isset($employee)) ? $employee->email : old('email', '') }}" type="email" name="email"  class="form-control" id="email" placeholder="email">
             </div>
             <div class="mb-3">
                 <label for="phone_number" class="form-label">phone_number</label>
-                <input  value="{{(isset($employee)) ? $employee->phone_number : '' }}" type="text" name="phone_number"  class="form-control" id="phone_number" placeholder="phone_number">
+                <input  value="{{(isset($employee)) ? $employee->phone_number : old('phone_number', '') }}" type="text" name="phone_number"  class="form-control" id="phone_number" placeholder="phone_number">
             </div>
             @if(isset($employee))
                 <button class="btn btn-primary"> Update</button>
