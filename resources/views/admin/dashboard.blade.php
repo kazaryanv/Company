@@ -19,6 +19,9 @@ adminpanel
             <button class="btn btn-primary">
                 <a style="color:white; text-decoration: none" href="{{route('employee.index')}}">Employee</a>
             </button>
+            <button class="btn btn-primary">
+                <a style="color:white; text-decoration: none" href="{{route('video.index')}}">Videos Users</a>
+            </button>
         </div>
     </div>
 <br>

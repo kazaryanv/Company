@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\VideoController;
 use Illuminate\Support\Facades\Route;
 require('auth.php');
 /*
@@ -17,4 +18,5 @@ require('auth.php');
 Route::prefix('admin')->group(function () {
     Route::resource("/companies", CompanyController::class);
     Route::resource("/employee", EmployeeController::class);
+    Route::resource("/video", VideoController::class);
 });
